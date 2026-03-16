@@ -87,6 +87,18 @@ gemara-mcp serve --mode artifact
 | `threat_assessment` | Interactive wizard for creating a Gemara-compatible Threat Catalog |
 | `control_catalog` | Interactive wizard for creating a Gemara-compatible Control Catalog |
 
+## Verifying Image Signatures
+
+Released container images are signed with [cosign](https://docs.sigstore.dev/cosign/overview/) using keyless signing via GitHub Actions OIDC.
+Signatures are attached to the image manifest digest.
+
+```bash
+cosign verify \
+  --certificate-identity-regexp="https://github.com/gemaraproj/gemara-mcp/.github/workflows/release.yml" \
+  --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
+  ghcr.io/gemaraproj/gemara-mcp@<DIGEST>
+```
+
 ## Building Docker Image
 
 ```bash
